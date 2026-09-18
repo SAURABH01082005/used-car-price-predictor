@@ -1,0 +1,369 @@
+\documentclass[12pt,a4paper]{report}
+
+% ---------- Packages ----------
+\usepackage[a4paper,left=1.3in,right=0.9in,top=0.85in,bottom=0.85in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{setspace}
+\usepackage{amssymb}
+
+\definecolor{navy}{RGB}{21,42,79}
+\definecolor{accent}{RGB}{37,99,235}
+
+\titleformat{\chapter}[display]
+  {\normalfont\centering\bfseries\color{navy}}
+  {\large\MakeUppercase{\chaptertitlename}\ \thechapter}
+  {4pt}
+  {\Large}
+\titlespacing*{\chapter}{0pt}{-8pt}{10pt}
+\titleformat{\section}{\normalfont\large\bfseries\color{navy}}{\thesection}{8pt}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{6pt}{}
+
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyhead[C]{\small\nouppercase{\leftmark}}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0.4pt}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=navy,
+    citecolor=navy,
+    urlcolor=accent,
+    pdftitle={Weekly Assessment Report -- Used Car Price Prediction and Analysis System},
+    pdfauthor={Bankar Smitraj Dinkar}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setstretch{1.05}
+
+% Full-border table helper (week metadata block; detailed work follows as itemize below)
+% Attendance is intentionally not repeated here -- see the Consolidated
+% Attendance Record chapter for the single authoritative attendance log.
+\newcommand{\weektable}[3]{%
+\begin{longtable}{|p{3.6cm}|p{10.5cm}|}
+\hline
+\textbf{Week} & \textbf{#1} \\
+\hline
+\textbf{Duration} & #2 \\
+\hline
+\textbf{Objectives} & #3 \\
+\hline
+\end{longtable}
+}
+
+\begin{document}
+\pagenumbering{roman}
+
+% =========================================================
+% TITLE PAGE
+% =========================================================
+\begin{titlepage}
+\centering
+\thispagestyle{empty}
+\vspace*{0.1cm}
+\includegraphics[width=2.1cm]{images/college_logo.png}\\[4pt]
+{\large\bfseries Sanjivani College of Engineering, Kopargaon\par}
+{\normalsize Department of Computer Engineering\par}
+{\normalsize (Affiliated to Savitribai Phule Pune University, Pune)\par}
+\vspace{0.2cm}
+\rule{\linewidth}{0.8pt}
+
+\vspace{0.5cm}
+{\Huge\bfseries\color{navy} Weekly Assessment Report\par}
+\vspace{0.3cm}
+{\Large\bfseries Used Car Price Prediction and Analysis System\\ Using Machine Learning\par}
+\vspace{0.3cm}
+{\large A Week-wise Progress and Assessment Log Submitted in Partial\\
+Fulfilment of the Requirements for the Course\par}
+\vspace{0.15cm}
+{\Large\bfseries HOCO492 --- Mini Project: Artificial Intelligence and Machine Learning\par}
+
+\vspace{0.65cm}
+{\large\itshape Submitted by\par}
+\vspace{0.15cm}
+{\LARGE\bfseries Bankar Smitraj Dinkar\par}
+{\large Roll No.: 09 \quad\textbar\quad PRN No.: UCS23M1009\par}
+
+\vspace{0.65cm}
+{\large\itshape Under the Guidance of\par}
+\vspace{0.15cm}
+{\Large\bfseries Prof. Bhagyashri Bhagawan Kotame\par}
+{\large Assistant Professor, Department of Computer Engineering\par}
+
+\vfill
+{\large Department of Computer Engineering\par}
+{\large Sanjivani College of Engineering, Kopargaon\par}
+{\large Academic Year 2026--2027 \quad\textbar\quad Duration: 09-Jul-2026 to 18-Oct-2026 (15 Weeks)\par}
+\end{titlepage}
+
+% =========================================================
+\chapter*{About This Report}
+\thispagestyle{empty}
+
+This document records the week-wise progress of the mini project
+\textbf{``Used Car Price Prediction and Analysis System Using Machine
+Learning''} over the full \textbf{15-week} project duration (09 July 2026
+-- 18 October 2026), as required for continuous mentor assessment under
+course \textbf{HOCO492}.
+
+Each week lists the planned objectives and the actual work performed,
+with references to the concrete files/artifacts produced in the project
+repository.
+
+\textbf{Note on structure:} the technical build of this project follows
+the standard ML lifecycle (data acquisition $\to$ preprocessing $\to$ EDA
+$\to$ modelling $\to$ evaluation $\to$ deployment $\to$ testing $\to$
+documentation). That lifecycle is mapped below onto the 15 available
+calendar weeks in the order the work was actually planned and completed.
+
+\tableofcontents
+
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% =========================================================
+\chapter{Week 1: Requirement Analysis and Topic Finalization}
+\weektable{1}{06 Jul 2026 -- 12 Jul 2026}{Finalize the mini-project topic, define the problem statement, and align it with course outcomes CO1--CO4.}
+
+\begin{itemize}[nosep]
+    \item Selected and finalized the project topic: \textit{Used Car Price Prediction and Analysis System Using Machine Learning}.
+    \item Defined the problem statement: used-car pricing is inconsistent and hard to estimate without domain expertise; a data-driven regression-based estimator is needed.
+    \item Drafted project objectives and mapped them explicitly to course outcomes CO1--CO4 (independent investigation, orderly reporting, literature linkage, practical constraints).
+    \item Reviewed the HOCO492 mini-project evaluation guidelines and scope (classical ML only, no deep learning).
+\end{itemize}
+\textbf{Deliverable:} \path{docs/project_proposal.md} (problem statement, objectives, scope, CO alignment).
+
+% =========================================================
+\chapter{Week 2: Literature Survey}
+\weektable{2}{13 Jul 2026 -- 19 Jul 2026}{Survey published work on used-car / vehicle price prediction using machine learning and identify methodological gaps to address.}
+
+\begin{itemize}[nosep]
+    \item Reviewed and verified five real published studies: Pudaruth (2014), Monburinon et al. (2018, ICBIR), Gegic et al. (2019, \textit{TEM Journal}), Pal et al. (2018, FICC/Springer), and Noor \& Jan (2017, \textit{IJCA}).
+    \item Cross-checked each paper's authors, venue, year, method, and reported result via independent search before citing.
+    \item Synthesized a common finding across papers: tree-based ensembles consistently outperform plain linear regression for used-car pricing.
+    \item Identified a methodological gap to avoid: several papers report only training accuracy without a comparable held-out check (motivated this project's explicit train/CV/test separation).
+\end{itemize}
+\textbf{Deliverable:} \path{docs/literature_survey.md} (5 verified references with per-paper relevance analysis).
+
+% =========================================================
+\chapter{Week 3: Dataset Acquisition and Project Setup}
+\weektable{3}{20 Jul 2026 -- 26 Jul 2026}{Identify a real, public dataset suitable for the problem and set up the project's software structure and environment.}
+
+\begin{itemize}[nosep]
+    \item Located and validated the CarDekho used-car dataset (\textit{``Car details v3.csv''}, Kaggle \path{nehalbirla/vehicle-dataset-from-cardekho}) -- 8{,}128 rows, 13 columns, matching the required feature set.
+    \item Set up the full project repository structure: \path{data/}, \path{src/}, \path{notebooks/}, \path{models/}, \path{reports/}, \path{tests/}, \path{docs/}.
+    \item Configured the Python 3.13 environment with pandas, NumPy, scikit-learn, XGBoost, matplotlib, seaborn, Plotly, Streamlit, joblib, and pytest.
+    \item Implemented \path{src/config.py} (paths, column mapping, reproducibility constants) and \path{src/data_loader.py} (schema-validated CSV loading).
+\end{itemize}
+\textbf{Deliverable:} \path{data/raw/used_cars.csv}, \path{src/config.py}, \path{src/data_loader.py}.
+
+% =========================================================
+\chapter{Week 4: Data Cleaning and Preprocessing Pipeline}
+\weektable{4}{27 Jul 2026 -- 02 Aug 2026}{Clean the raw dataset and build a leakage-free preprocessing pipeline.}
+
+\begin{itemize}[nosep]
+    \item Implemented \path{clean_raw_data()}: duplicate removal (1{,}202 exact duplicates found), regex-based unit stripping (\texttt{"1248 CC"} $\to$ \texttt{1248.0}, \texttt{"74 bhp"} $\to$ \texttt{74.0}, \texttt{"23.4 kmpl"} $\to$ \texttt{23.4}), invalid-target row removal, and sanity filters on \path{km_driven}/\texttt{year}.
+    \item Dropped the \texttt{torque} column after determining its free-text format could not be parsed reliably.
+    \item Built the \texttt{ColumnTransformer}-based preprocessing pipeline: median imputation + standard scaling (numeric), most-frequent imputation + one-hot encoding (categorical).
+\end{itemize}
+\textbf{Deliverable:} \path{src/preprocessing.py}.
+
+% =========================================================
+\chapter{Week 5: Exploratory Data Analysis and Feature Engineering}
+\weektable{5}{03 Aug 2026 -- 09 Aug 2026}{Explore the cleaned dataset and engineer features that improve model learnability.}
+
+\begin{itemize}[nosep]
+    \item Built and executed \path{notebooks/01_eda.ipynb} covering all required EDA items: distributions, missing-value and duplicate analysis, correlation matrix, price vs.\ age, km driven, mileage, and engine capacity, price by fuel type, transmission, and seller type, and outlier analysis.
+    \item Implemented \path{car_age} (current year $-$ manufacturing year), \texttt{brand} extraction from the free-text \texttt{name} column, and rare-brand grouping ($<$20 listings $\to$ ``Other'').
+    \item Saved all generated EDA plots to \path{reports/figures/}.
+\end{itemize}
+\textbf{Deliverable:} \path{notebooks/01_eda.ipynb}, \path{src/feature_engineering.py}, \path{reports/figures/*.png}.
+
+% =========================================================
+\chapter{Week 6: Baseline Model Development}
+\weektable{6}{10 Aug 2026 -- 16 Aug 2026}{Implement the core training pipeline and establish baseline regression performance.}
+
+\begin{itemize}[nosep]
+    \item Implemented \path{src/train.py}: data preparation, 80/20 train--test split (\path{random_state=42}), and the candidate-model registry.
+    \item Trained and evaluated baseline Linear Regression, Ridge Regression, and Decision Tree models.
+    \item Established the baseline test R\textsuperscript{2} $\approx$ 0.71 (linear models) as the bar subsequent ensemble models must clear.
+\end{itemize}
+\textbf{Deliverable:} \path{src/train.py} (baseline stage), \path{notebooks/02_preprocessing.ipynb}.
+
+% =========================================================
+\chapter{Week 7: Ensemble Models and Cross-Validation}
+\weektable{7}{17 Aug 2026 -- 23 Aug 2026}{Extend the candidate set to ensemble methods and compare all candidates via 5-fold cross-validation.}
+
+\begin{itemize}[nosep]
+    \item Added Random Forest, Gradient Boosting, and XGBoost to the candidate model set (6 algorithms total).
+    \item Implemented 5-fold cross-validation (\path{cross_validate_models()}) reporting CV RMSE, R\textsuperscript{2}, and MAE (mean $\pm$ std) for every candidate on the training split only.
+    \item Observed tree-based ensembles clearly outperforming linear models (CV R\textsuperscript{2} $\approx$ 0.87--0.88 vs. $\approx$ 0.69), consistent with the literature survey findings (Week 2).
+\end{itemize}
+\textbf{Deliverable:} \path{reports/cv_results.csv}.
+
+% =========================================================
+\chapter{Week 8: Hyperparameter Tuning}
+\weektable{8}{24 Aug 2026 -- 30 Aug 2026}{Tune the strongest candidate models within a bounded search budget.}
+
+\begin{itemize}[nosep]
+    \item Defined bounded hyperparameter search spaces for Random Forest and XGBoost (n\_estimators, max\_depth, learning\_rate, subsample, etc.).
+    \item Ran \texttt{RandomizedSearchCV} (20 iterations, 5-fold CV) on both models via \path{tune_model()}.
+    \item Logged tuned CV RMSE and best hyperparameters for each; observed that tuning gains were modest and did not uniformly beat the untuned models on the later test-set check (Week 9).
+\end{itemize}
+\textbf{Deliverable:} Tuned model pipelines and logged best-parameter sets (see \path{src/train.py::tune_model}).
+
+% =========================================================
+\chapter{Week 9: Final Evaluation and Model Selection}
+\weektable{9}{31 Aug 2026 -- 06 Sep 2026}{Evaluate every candidate once on the held-out test set and objectively select the final model.}
+
+\begin{itemize}[nosep]
+    \item Evaluated all 8 candidates (6 baseline + 2 tuned) exactly once on the untouched 20\% test split.
+    \item Selected \textbf{Gradient Boosting} as the final model -- objectively the lowest test RMSE (Rs.\,151{,}043, R\textsuperscript{2} = 0.9281, MAPE = 21.28\%), narrowly ahead of the tuned Random Forest and XGBoost.
+    \item Verified no evidence of overfitting (test R\textsuperscript{2} not lower than the CV R\textsuperscript{2} range).
+    \item Generated diagnostic plots: actual-vs-predicted, residual plot, error distribution, feature importance.
+    \item Serialized the final bundled pipeline (preprocessing + model) with \texttt{joblib}.
+\end{itemize}
+\textbf{Deliverable:} \path{reports/model_comparison.csv}, \path{reports/results.md}, \path{models/used_car_price_model.pkl}, \path{models/model_metadata.json}, \path{reports/figures/*.png}.
+
+% =========================================================
+\chapter{Week 10: Streamlit Application Development}
+\weektable{10}{07 Sep 2026 -- 13 Sep 2026}{Build the interactive web application around the trained pipeline.}
+
+\begin{itemize}[nosep]
+    \item Implemented \path{src/predict.py}: input validation rules (year range, non-negative km, plausible mileage/engine/power bounds, known categorical values) and the prediction interface, including the empirical price-range calculation from test-set residual quantiles.
+    \item Built \path{app.py} with five pages: \textit{Home, Price Prediction, Data Analysis, Model Performance, About Project} -- all reading live from generated reports/artifacts, nothing hard-coded.
+    \item Manually verified the Price Prediction form end-to-end with sample vehicle inputs.
+\end{itemize}
+\textbf{Deliverable:} \path{app.py}, \path{src/predict.py}.
+
+% =========================================================
+\chapter{Week 11: Automated Testing, Reliability and Containerization}
+\weektable{11}{14 Sep 2026 -- 20 Sep 2026}{Validate the system with automated tests and package it for portable deployment.}
+
+\begin{itemize}[nosep]
+    \item Wrote 40 automated \texttt{pytest} test cases across \path{tests/test_data.py}, \path{test_preprocessing.py}, \path{test_model.py}, and \path{test_prediction.py} -- all 40 passing.
+    \item Ran reliability testing: 50 repeated predictions on identical input (0\% variance, deterministic output) and measured per-prediction latency (mean 2.99\,ms on a warm model).
+    \item Authored \texttt{Dockerfile} and \path{docker-compose.yml}; built the image, ran the container, and confirmed the health check reports \texttt{healthy} and the app serves HTTP 200.
+\end{itemize}
+\textbf{Deliverable:} \path{tests/*.py}, \path{reports/test_cases.md}, \path{reports/reliability_test.md}, \texttt{Dockerfile}, \path{docker-compose.yml}.
+
+% =========================================================
+\chapter{Week 12: Project Documentation}
+\weektable{12}{21 Sep 2026 -- 27 Sep 2026}{Produce the full supporting documentation set expected for the course (SDLC, design, methodology, limitations).}
+
+\begin{itemize}[nosep]
+    \item Authored \path{docs/sdlc.md} (Agile sprint plan mapped to this project's actual phases).
+    \item Authored \path{docs/system_design.md} (layered architecture, data-flow tables) and \path{docs/methodology.md} (full pipeline, leakage-avoidance rationale).
+    \item Authored \path{docs/limitations.md} and \path{docs/future_scope.md}, documenting honest constraints (regional scope, dropped \texttt{torque} feature, empirical price range) rather than overstating capability.
+    \item Authored \path{docs/academic_report.md} (18-chapter report skeleton) and the top-level \path{README.md}.
+\end{itemize}
+\textbf{Deliverable:} \path{docs/*.md}, \path{README.md}.
+
+% =========================================================
+\chapter{Week 13: Project Synopsis Report (LaTeX)}
+\weektable{13}{28 Sep 2026 -- 04 Oct 2026}{Prepare the formal, submission-ready project synopsis document.}
+
+\begin{itemize}[nosep]
+    \item Authored the full LaTeX synopsis (\path{reports/synopsis.tex}) following standard blackbook formatting: Times 12pt, justified body text, centered chapter headings, roman/arabic page numbering, footer pagination, List of Figures/Tables.
+    \item Captured real application screenshots via automated browser testing (Playwright driving the live Streamlit app) for the Price Prediction, Data Analysis, and Model Performance pages.
+    \item Added system architecture diagrams (layered architecture, end-to-end ML pipeline), the mathematical formulation of every algorithm and metric used, and full training-algorithm pseudocode.
+    \item Compiled with MiKTeX/\texttt{pdflatex}; verified via page-by-page ink-coverage audit that no page is more than half blank.
+\end{itemize}
+\textbf{Deliverable:} \path{reports/synopsis.pdf}.
+
+% =========================================================
+\chapter{Week 14: Final Verification and Refinement}
+\weektable{14}{05 Oct 2026 -- 11 Oct 2026}{Re-verify the entire system end-to-end and polish report formatting.}
+
+\begin{itemize}[nosep]
+    \item Re-ran \texttt{python -m src.train} end-to-end and confirmed all generated metrics/plots are reproducible from the included dataset with the fixed random seed.
+    \item Re-ran the full \texttt{pytest} suite (40/40 passing) and re-verified the Docker image builds and serves correctly.
+    \item Refined report formatting per review feedback: fully bordered tables, justified/centered layout, footer-based pagination, proper font standards.
+\end{itemize}
+\textbf{Deliverable:} Finalized \path{reports/synopsis.pdf}; verified reproducibility end-to-end.
+
+% =========================================================
+\chapter{Week 15: Viva Preparation and Final Submission}
+\weektable{15}{12 Oct 2026 -- 18 Oct 2026}{Prepare for the viva-voce examination and complete final project submission.}
+
+\begin{itemize}[nosep]
+    \item Prepared \path{docs/viva_questions.md} (44 anticipated questions with answers spanning ML fundamentals, preprocessing, evaluation metrics, and system design).
+    \item Prepared \path{docs/presentation_outline.md} (12-slide defense presentation).
+    \item Performed a final walkthrough of the live application and all generated reports as rehearsal for the viva demonstration.
+    \item Assembled the complete project repository (code, trained model, tests, Docker setup, documentation, and this report) for final submission.
+\end{itemize}
+\textbf{Deliverable:} Complete, submission-ready project repository.
+
+% =========================================================
+\chapter*{Overall Completion Summary and Sign-off}
+\addcontentsline{toc}{chapter}{Overall Completion Summary and Sign-off}
+
+\section*{Milestone Completion Checklist}
+\begin{longtable}{|p{1.2cm}|p{8.3cm}|p{3.2cm}|}
+\hline
+\textbf{Week} & \textbf{Milestone} & \textbf{Status} \\
+\hline
+1--2 & Topic finalization and literature survey & Completed \\
+\hline
+3--4 & Dataset acquisition, cleaning and preprocessing pipeline & Completed \\
+\hline
+5 & Exploratory data analysis and feature engineering & Completed \\
+\hline
+6--8 & Model development, cross-validation and hyperparameter tuning & Completed \\
+\hline
+9 & Final model evaluation and selection (Gradient Boosting) & Completed \\
+\hline
+10 & Streamlit application development & Completed \\
+\hline
+11 & Automated testing, reliability testing and containerization & Completed \\
+\hline
+12--13 & Documentation and project synopsis report & Completed \\
+\hline
+14 & Final verification and refinement & Completed \\
+\hline
+15 & Viva preparation and final submission & Completed \\
+\hline
+\end{longtable}
+
+\section*{Overall Remarks}
+\noindent\rule{\linewidth}{0.4pt}
+\vspace{1.3cm}
+\noindent\rule{\linewidth}{0.4pt}
+\vspace{1.3cm}
+\noindent\rule{\linewidth}{0.4pt}
+
+\vspace{1cm}
+\begin{minipage}[t]{0.3\linewidth}
+\underline{\hspace{3.5cm}}\\
+Student Signature\\
+Bankar Smitraj Dinkar
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\linewidth}
+\underline{\hspace{3.5cm}}\\
+Guide Signature\\
+Prof. Bhagyashri B. Kotame
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\linewidth}
+\underline{\hspace{3.5cm}}\\
+HOD Signature\\
+Dr. M. A. Jawale
+\end{minipage}
+
+\end{document}

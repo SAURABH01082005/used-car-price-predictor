@@ -28,6 +28,12 @@ reports/*.aux
 reports/*.log
 reports/*.out
 reports/*.toc
+reports/*.lof
+reports/*.lot
 reports/*.synctex.gz
 reports/synopsis_thumb-*.png
 reports/contact_sheet.png
+reports/wk_thumb-*.png
+reports/wk_contact_sheet.png
+reports/check_table*.png
+reports/check_overflow*.png

@@ -19,22 +19,31 @@
 \usepackage{tabularx}
 \usepackage{setspace}
 \usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{ragged2e}
 
 \definecolor{navy}{RGB}{21,42,79}
 \definecolor{accent}{RGB}{37,99,235}
 
-\titleformat{\chapter}[hang]{\normalfont\Large\bfseries\color{navy}}{\thechapter.}{12pt}{\Large}
-\titlespacing*{\chapter}{0pt}{-14pt}{14pt}
+% Centered chapter headings: "Chapter N" then title below, both centered.
+\titleformat{\chapter}[display]
+  {\normalfont\centering\bfseries\color{navy}}
+  {\large\MakeUppercase{\chaptertitlename}\ \thechapter}
+  {4pt}
+  {\Large}
+\titlespacing*{\chapter}{0pt}{-8pt}{12pt}
 \titleformat{\section}{\normalfont\large\bfseries\color{navy}}{\thesection}{8pt}{}
 \titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{6pt}{}
 
+% Page number lives in the footer (centered); header shows the chapter name.
 \setlength{\headheight}{14pt}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\nouppercase{\leftmark}}
-\fancyhead[R]{\small\thepage}
+\fancyhead[C]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
-\fancypagestyle{plain}{\fancyhf{}\fancyhead[L]{\small\nouppercase{\leftmark}}\fancyhead[R]{\small\thepage}\renewcommand{\headrulewidth}{0.4pt}}
+\fancypagestyle{plain}{\fancyhf{}\fancyhead[C]{\small\nouppercase{\leftmark}}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0.4pt}}
 
 \hypersetup{
     colorlinks=true,
@@ -126,7 +135,7 @@ Department of Computer Engineering
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.45\linewidth}
-\textbf{[Head of Department Name]}\\
+\textbf{Dr. M. A. Jawale}\\
 Head of Department\\
 Department of Computer Engineering
 \end{minipage}
@@ -178,14 +187,26 @@ Streamlit, Scikit-learn.
 % =========================================================
 % TABLE OF CONTENTS / LIST OF FIGURES / LIST OF TABLES
 % =========================================================
-{\small\tableofcontents}
-
-% List of Figures / List of Tables share the Contents page (plenty of
-% blank space below a 9-entry TOC) instead of each forcing its own
-% near-empty page via the default \listoffigures/\listoftables commands.
-% \small keeps all three index lists on one page.
-\begingroup\small
+% Contents + List of Figures + List of Tables share ONE page: \small text
+% and a tightened \l@chapter inter-entry gap (the class default's 1.0em
+% vskip per chapter-level TOC line is generous enough to force 3 index
+% lists across 2+ near-empty pages on their own).
+\begingroup\footnotesize
 \makeatletter
+\renewcommand\l@chapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \vskip 0.18em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima \hskip -\leftskip
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+    \endgroup
+  \fi}
+
+\tableofcontents
+
 \addcontentsline{toc}{chapter}{List of Figures}
 \section*{\listfigurename}
 \@starttoc{lof}
@@ -235,27 +256,31 @@ against prior work (Table~\ref{tab:litsurvey}).
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{@{}lX@{}}
-\toprule
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
 \textbf{Study} & \textbf{Method \& Key Finding} \\
-\midrule
+\hline
 Pudaruth (2014) &
 Linear regression, k-NN, na\"ive Bayes, decision trees on $\sim$200
 Mauritian newspaper listings; 60--70\% accuracy, limited by small dataset
 size. \\[4pt]
+\hline
 Monburinon et al. (2018), ICBIR &
 Compared regression models on German used-car listings; gradient boosted
 regression trees gave the best performance. \\[4pt]
+\hline
 Gegic et al. (2019), \textit{TEM Journal} &
 ANN + SVM + Random Forest ensemble on Bosnian listings; ensemble
 outperformed any single algorithm. \\[4pt]
+\hline
 Pal et al. (2018), FICC (Springer) &
 Random Forest (500 trees); 95.82\% training vs. 83.63\% testing accuracy
 --- a visible overfitting gap. \\[4pt]
+\hline
 Noor \& Jan (2017), \textit{IJCA} &
 Multiple linear regression reported $\sim$98\% precision on a vehicle
 listing dataset. \\
-\bottomrule
+\hline
 \end{tabularx}
 \caption{Summary of reviewed literature on used-car price prediction.}
 \label{tab:litsurvey}
@@ -316,6 +341,22 @@ dashboards). Bundling preprocessing and the model together guarantees the
 exact transformation learned at training time is applied at inference
 time, eliminating train/serve skew.
 
+\section*{Layered Architecture}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    layer/.style={rectangle, draw=navy, thick, minimum width=11.5cm,
+        minimum height=1.05cm, align=center, font=\small},
+    lbl/.style={font=\small\itshape, navy}
+]
+\node[layer, fill=navy!25] (pres) {\textbf{Presentation Layer} --- prediction results, analytics dashboards (Streamlit pages)};
+\node[layer, fill=navy!18, below=2mm of pres] (ml) {\textbf{ML Layer} --- bundled \texttt{scikit-learn Pipeline} (preprocessing + trained model)};
+\node[layer, fill=navy!11, below=2mm of ml] (proc) {\textbf{Processing Layer} --- input validation, feature engineering};
+\node[layer, fill=navy!5, below=2mm of proc] (inp) {\textbf{Input Layer} --- Streamlit form widgets};
+\end{tikzpicture}
+\caption{Four-layer system architecture.}
+\end{figure}
+
 % =========================================================
 \chapter{Dataset and Methodology}
 
@@ -360,6 +401,103 @@ used. Model selection and tuning rely solely on \textbf{5-fold
 cross-validation on the training split}; the test set is touched exactly
 once, for the final, unbiased evaluation of the already-selected model.
 
+\section*{ML Training Pipeline}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=4mm,
+    box/.style={rectangle, draw=navy, thick, rounded corners, fill=navy!6,
+        minimum width=7.4cm, minimum height=0.68cm, align=center, font=\small},
+    arr/.style={-{Stealth[length=2.2mm]}, thick, navy}
+]
+\node[box] (raw) {Raw Dataset (8{,}128 rows)};
+\node[box, below=of raw] (clean) {Data Cleaning (dedupe, unit-strip, filter)};
+\node[box, below=of clean] (feat) {Feature Engineering (car\_age, brand)};
+\node[box, below=of feat] (split) {Train/Test Split (80/20, seed=42)};
+\node[box, below=of split] (models) {6 Candidate Models + 5-Fold CV};
+\node[box, below=of models] (tune) {RandomizedSearchCV Tuning (top 2)};
+\node[box, below=of tune] (select) {Final Selection (lowest test RMSE)};
+\node[box, below=of select] (save) {Save Pipeline (\texttt{joblib})};
+
+\draw[arr] (raw) -- (clean);
+\draw[arr] (clean) -- (feat);
+\draw[arr] (feat) -- (split);
+\draw[arr] (split) -- (models);
+\draw[arr] (models) -- (tune);
+\draw[arr] (tune) -- (select);
+\draw[arr] (select) -- (save);
+\end{tikzpicture}
+\caption{End-to-end ML training pipeline (\texttt{src/train.py}).}
+\end{figure}
+
+\section*{Mathematical Formulation}
+\textbf{Feature engineering.} Vehicle age is computed as
+\begin{equation}
+\text{car\_age} = \text{CURRENT\_YEAR} - \text{year}, \qquad \text{car\_age} \geq 0.
+\end{equation}
+
+\textbf{Linear/Ridge Regression.} Both fit a linear predictor
+$\hat{y} = \beta_0 + \sum_{i=1}^{p}\beta_i x_i$; Ridge additionally
+penalizes coefficient magnitude to reduce overfitting/multicollinearity:
+\begin{equation}
+J(\beta) = \sum_{i=1}^{n}\left(y_i - \hat{y}_i\right)^2 + \lambda\sum_{j=1}^{p}\beta_j^2 .
+\end{equation}
+
+\textbf{Decision Tree.} Each split minimizes the weighted variance
+(mean squared error) of the target within the resulting child nodes:
+\begin{equation}
+\text{MSE}(\text{node}) = \frac{1}{n}\sum_{i=1}^{n}\left(y_i - \bar{y}\right)^2 .
+\end{equation}
+
+\textbf{Random Forest.} Averages predictions over $B$ independently
+bootstrapped trees $T_b$:
+\begin{equation}
+\hat{y} = \frac{1}{B}\sum_{b=1}^{B} T_b(x).
+\end{equation}
+
+\textbf{Gradient Boosting / XGBoost.} Builds an additive model
+sequentially, each new tree $h_m$ fit to the residual errors of the
+current ensemble $F_{m-1}$:
+\begin{equation}
+F_m(x) = F_{m-1}(x) + \gamma_m\, h_m(x).
+\end{equation}
+
+\textbf{Evaluation metrics} (used throughout Chapter 5), for $n$ test
+vehicles with true prices $y_i$ and predictions $\hat{y}_i$:
+\begin{align}
+\text{MAE} &= \frac{1}{n}\sum_{i=1}^{n}\left|y_i - \hat{y}_i\right| \\
+\text{RMSE} &= \sqrt{\frac{1}{n}\sum_{i=1}^{n}\left(y_i - \hat{y}_i\right)^2} \\
+R^2 &= 1 - \frac{\sum_{i=1}^{n}(y_i-\hat{y}_i)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2} \\
+\text{MAPE} &= \frac{100\%}{n}\sum_{i=1}^{n}\left|\frac{y_i - \hat{y}_i}{y_i}\right|
+\end{align}
+
+\section*{Training Algorithm}
+\begin{algorithm}[H]
+\small
+\SetAlgoLined
+\KwIn{Raw dataset $D$}
+\KwOut{Final trained pipeline $P^*$}
+$D_{\text{clean}} \leftarrow \text{Clean}(D)$ \tcp*{dedupe, unit-strip, drop invalid rows}
+$D_{\text{feat}} \leftarrow \text{FeatureEngineer}(D_{\text{clean}})$ \tcp*{car\_age, brand, group rare brands}
+$(X_{tr}, y_{tr}, X_{te}, y_{te}) \leftarrow \text{Split}(D_{\text{feat}}, 0.2, \text{seed}{=}42)$\;
+$\mathcal{M} \leftarrow \{$Linear, Ridge, Tree, Forest, GBoost, XGBoost$\}$\;
+\ForEach{$m \in \mathcal{M}$}{
+    $\text{score}[m] \leftarrow \text{CrossValidate}(m, X_{tr}, y_{tr}, k{=}5)$\;
+}
+$\text{top2} \leftarrow$ two strongest tree-based models by CV RMSE\;
+\ForEach{$m \in \text{top2}$}{
+    $m_{\text{tuned}} \leftarrow \text{RandomizedSearchCV}(m, X_{tr}, y_{tr}, 20\text{ iters}, k{=}5)$\;
+}
+$\mathcal{C} \leftarrow \mathcal{M} \cup \{m_{\text{tuned}}\}$, each fit on $(X_{tr}, y_{tr})$\;
+\ForEach{$c \in \mathcal{C}$}{
+    $\text{testScore}[c] \leftarrow \text{Evaluate}(c, X_{te}, y_{te})$ \tcp*{RMSE, MAE, R\textsuperscript{2}, MAPE}
+}
+$P^* \leftarrow \arg\min_{c \in \mathcal{C}} \text{testScore}[c].\text{RMSE}$\;
+$\text{Save}(P^*, \texttt{models/used\_car\_price\_model.pkl})$\;
+\Return{$P^*$}
+\caption{Model Training, Comparison and Selection}
+\end{algorithm}
+
 % =========================================================
 \chapter{Results and Discussion}
 
@@ -367,17 +505,22 @@ once, for the final, unbiased evaluation of the already-selected model.
 \begin{table}[H]
 \centering
 \small
-\begin{tabular}{lrrr}
-\toprule
+\begin{tabular}{|l|r|r|r|}
+\hline
 \textbf{Model} & \textbf{CV RMSE (mean $\pm$ std)} & \textbf{CV R\textsuperscript{2}} & \textbf{CV MAE} \\
-\midrule
+\hline
 Random Forest      & 174{,}844 $\pm$ 24{,}290 & 0.8774 & 80{,}431 \\
+\hline
 XGBoost             & 180{,}482 $\pm$ 33{,}281 & 0.8690 & 79{,}612 \\
+\hline
 Gradient Boosting   & 181{,}033 $\pm$ 25{,}209 & 0.8698 & 88{,}556 \\
+\hline
 Decision Tree       & 223{,}515 $\pm$ 26{,}032 & 0.8011 & 96{,}924 \\
+\hline
 Ridge Regression    & 278{,}344 $\pm$ 21{,}014 & 0.6957 & 143{,}028 \\
+\hline
 Linear Regression   & 279{,}630 $\pm$ 19{,}445 & 0.6918 & 142{,}644 \\
-\bottomrule
+\hline
 \end{tabular}
 \caption{5-fold cross-validation comparison (Rs., training split only).}
 \end{table}
@@ -386,19 +529,26 @@ Linear Regression   & 279{,}630 $\pm$ 19{,}445 & 0.6918 & 142{,}644 \\
 \begin{table}[H]
 \centering
 \small
-\begin{tabular}{lrrrr}
-\toprule
+\begin{tabular}{|l|r|r|r|r|}
+\hline
 \textbf{Model} & \textbf{MAE} & \textbf{RMSE} & \textbf{R\textsuperscript{2}} & \textbf{MAPE} \\
-\midrule
+\hline
 \textbf{Gradient Boosting (final)} & \textbf{85{,}131} & \textbf{151{,}043} & \textbf{0.9281} & \textbf{21.28\%} \\
+\hline
 Random Forest (Tuned)  & 77{,}246 & 153{,}316 & 0.9259 & 18.38\% \\
+\hline
 Random Forest           & 76{,}477 & 154{,}811 & 0.9245 & 18.34\% \\
+\hline
 XGBoost (Tuned)          & 80{,}079 & 155{,}392 & 0.9239 & 19.12\% \\
+\hline
 XGBoost                  & 76{,}662 & 171{,}292 & 0.9076 & 17.43\% \\
+\hline
 Decision Tree            & 98{,}218 & 220{,}223 & 0.8472 & 21.60\% \\
+\hline
 Linear Regression        & 147{,}627 & 304{,}477 & 0.7079 & 49.25\% \\
+\hline
 Ridge Regression         & 148{,}216 & 304{,}519 & 0.7079 & 49.45\% \\
-\bottomrule
+\hline
 \end{tabular}
 \caption{Held-out test-set metrics (Rs.), evaluated once per model.}
 \end{table}
@@ -455,16 +605,20 @@ cases} across four files, all passing at time of writing.
 \begin{table}[H]
 \centering
 \small
-\begin{tabular}{lll}
-\toprule
+\begin{tabular}{|l|r|p{7.2cm}|}
+\hline
 \textbf{Category} & \textbf{Cases} & \textbf{Example} \\
-\midrule
+\hline
 Data validation & 7 & Missing dataset $\rightarrow$ clear error \\
+\hline
 Preprocessing   & 10 & Unit stripping, duplicate removal, feature engineering \\
+\hline
 Model loading   & 7 & Corrupted/missing model file handled gracefully \\
+\hline
 Prediction \& validation & 13 & Negative km, future year, unknown category rejected \\
+\hline
 Reliability     & 3 & Deterministic output; $<$5\,ms latency over 50 runs \\
-\bottomrule
+\hline
 \end{tabular}
 \caption{Test suite summary (full detail in \texttt{reports/test\_cases.md}).}
 \end{table}
@@ -478,15 +632,18 @@ low-latency behaviour suitable for interactive use.
 \begin{table}[H]
 \centering
 \small
-\begin{tabular}{p{2.6cm}p{5.6cm}p{5.6cm}}
-\toprule
+\begin{tabular}{|p{2.6cm}|p{5.6cm}|p{5.6cm}|}
+\hline
 \textbf{Test ID} & \textbf{Input} & \textbf{Expected Result} \\
-\midrule
+\hline
 TC-001 & Valid vehicle input & Prediction generated successfully \\
+\hline
 TC-003 & Negative kilometers driven & Input rejected with validation error \\
+\hline
 TC-004 & Future manufacturing year & Input rejected with validation error \\
+\hline
 TC-014 & Brand never seen during training & Handled gracefully, prediction still returned \\
-\bottomrule
+\hline
 \end{tabular}
 \caption{Representative manual test cases (full list: \texttt{reports/test\_cases.md}).}
 \end{table}
