@@ -1,0 +1,13 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces System architecture: from user input to final result.}}{3}{figure.caption.5}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Left: Actual vs. predicted selling price on the test set. Right: Top feature importances for the final Gradient Boosting model.}}{6}{figure.caption.8}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Price Prediction page --- form input and generated result (Rs.5.96 Lakh, range Rs.4.80--7.12 Lakh) for a sample 2019 Maruti Petrol Manual vehicle.}}{7}{figure.caption.9}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Left: Data Analysis dashboard (dataset statistics and price distribution). Right: Model Performance dashboard (live test-set comparison table).}}{7}{figure.caption.10}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

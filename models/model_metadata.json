@@ -1,0 +1,43 @@
+{
+  "final_model_name": "Gradient Boosting",
+  "trained_at": "2026-09-18T15:56:46.976081",
+  "training_rows": 5539,
+  "test_rows": 1385,
+  "features": [
+    "car_age",
+    "km_driven",
+    "mileage",
+    "engine",
+    "max_power",
+    "seats",
+    "brand",
+    "fuel",
+    "seller_type",
+    "transmission",
+    "owner"
+  ],
+  "test_metrics": {
+    "MAE": 85131.28204429796,
+    "MSE": 22813910137.77416,
+    "RMSE": 151042.7427510973,
+    "R2": 0.9281295195224184,
+    "MAPE": 21.277673153570362
+  },
+  "residual_p10": -115599.25304048618,
+  "residual_p90": 116650.3888576876,
+  "cv_folds": 5,
+  "random_state": 42,
+  "training_duration_seconds": 48.4,
+  "models_compared": [
+    "Linear Regression",
+    "Ridge Regression",
+    "Decision Tree",
+    "Random Forest",
+    "Gradient Boosting",
+    "XGBoost"
+  ],
+  "models_tuned": [
+    "Random Forest",
+    "XGBoost"
+  ]
+}
