@@ -1,6 +1,6 @@
 {
   "final_model_name": "Gradient Boosting",
-  "trained_at": "2026-09-18T15:56:46.976081",
+  "trained_at": "2026-10-07T09:12:35.877071",
   "training_rows": 5539,
   "test_rows": 1385,
   "features": [
@@ -27,7 +27,7 @@
   "residual_p90": 116650.3888576876,
   "cv_folds": 5,
   "random_state": 42,
-  "training_duration_seconds": 48.4,
+  "training_duration_seconds": 176.7,
   "models_compared": [
     "Linear Regression",
     "Ridge Regression",

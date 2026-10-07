@@ -86,8 +86,6 @@ different schema — the rest of the pipeline adapts automatically.
 used-car-price-predictor/
 ├── app.py                     # Streamlit application
 ├── requirements.txt
-├── Dockerfile
-├── docker-compose.yml
 ├── README.md
 ├── data/
 │   ├── raw/used_cars.csv
@@ -134,43 +132,23 @@ used-car-price-predictor/
 
 ## Installation
 
-```
+```bash
 python -m venv .venv
 ```
 
-Windows:
-```
+Windows (PowerShell / Command Prompt):
+```powershell
 .venv\Scripts\activate
 ```
 
+Linux / macOS:
+```bash
+source .venv/bin/activate
+```
+
 Install dependencies:
-```
+```bash
 pip install -r requirements.txt
-```
-
-## Running with Docker
-
-No local Python setup needed — build and run the app in a container
-(verified working: image builds, app serves HTTP 200, healthcheck passes).
-
-```
-docker compose up --build
-```
-
-Then open `http://localhost:8501`. The container ships with the
-already-trained model and dataset baked in, so it serves predictions
-immediately.
-
-To retrain the model inside the container instead (writes back to your
-local `models/`, `reports/`, `data/` via the mounted volumes):
-```
-docker compose run --rm train
-```
-
-Without Compose:
-```
-docker build -t used-car-price-predictor .
-docker run -p 8501:8501 used-car-price-predictor
 ```
 
 ## Training the Model

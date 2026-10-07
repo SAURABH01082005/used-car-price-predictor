@@ -252,15 +252,15 @@ calendar weeks in the order the work was actually planned and completed.
 \textbf{Deliverable:} \path{app.py}, \path{src/predict.py}.
 
 % =========================================================
-\chapter{Week 11: Automated Testing, Reliability and Containerization}
-\weektable{11}{14 Sep 2026 -- 20 Sep 2026}{Validate the system with automated tests and package it for portable deployment.}
+\chapter{Week 11: Automated Testing and Reliability}
+\weektable{11}{14 Sep 2026 -- 20 Sep 2026}{Validate the system with automated tests and benchmark prediction reliability.}
 
 \begin{itemize}[nosep]
     \item Wrote 40 automated \texttt{pytest} test cases across \path{tests/test_data.py}, \path{test_preprocessing.py}, \path{test_model.py}, and \path{test_prediction.py} -- all 40 passing.
     \item Ran reliability testing: 50 repeated predictions on identical input (0\% variance, deterministic output) and measured per-prediction latency (mean 2.99\,ms on a warm model).
-    \item Authored \texttt{Dockerfile} and \path{docker-compose.yml}; built the image, ran the container, and confirmed the health check reports \texttt{healthy} and the app serves HTTP 200.
+    \item Verified application deployment, routing, and UI responsiveness locally across all application views.
 \end{itemize}
-\textbf{Deliverable:} \path{tests/*.py}, \path{reports/test_cases.md}, \path{reports/reliability_test.md}, \texttt{Dockerfile}, \path{docker-compose.yml}.
+\textbf{Deliverable:} \path{tests/*.py}, \path{reports/test_cases.md}, \path{reports/reliability_test.md}.
 
 % =========================================================
 \chapter{Week 12: Project Documentation}
@@ -292,7 +292,7 @@ calendar weeks in the order the work was actually planned and completed.
 
 \begin{itemize}[nosep]
     \item Re-ran \texttt{python -m src.train} end-to-end and confirmed all generated metrics/plots are reproducible from the included dataset with the fixed random seed.
-    \item Re-ran the full \texttt{pytest} suite (40/40 passing) and re-verified the Docker image builds and serves correctly.
+    \item Re-ran the full \texttt{pytest} suite (40/40 passing) and re-verified the application runs and serves correctly.
     \item Refined report formatting per review feedback: fully bordered tables, justified/centered layout, footer-based pagination, proper font standards.
 \end{itemize}
 \textbf{Deliverable:} Finalized \path{reports/synopsis.pdf}; verified reproducibility end-to-end.
@@ -305,7 +305,7 @@ calendar weeks in the order the work was actually planned and completed.
     \item Prepared \path{docs/viva_questions.md} (44 anticipated questions with answers spanning ML fundamentals, preprocessing, evaluation metrics, and system design).
     \item Prepared \path{docs/presentation_outline.md} (12-slide defense presentation).
     \item Performed a final walkthrough of the live application and all generated reports as rehearsal for the viva demonstration.
-    \item Assembled the complete project repository (code, trained model, tests, Docker setup, documentation, and this report) for final submission.
+    \item Assembled the complete project repository (code, trained model, tests, documentation, and this report) for final submission.
 \end{itemize}
 \textbf{Deliverable:} Complete, submission-ready project repository.
 
